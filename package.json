@@ -1,0 +1,39 @@
+{
+  "name": "@xe/xecd-rates-client",
+  "version": "0.1.0",
+  "description": "XECD REST Client",
+  "keywords": [
+    "xecd",
+    "node",
+    "api",
+    "client",
+    "xe",
+    "currency",
+    "data",
+    "rest"
+  ],
+  "license": "MPL-2.0",
+  "contributors": [
+    "XE.com Inc. Development Team (http://www.xe.com)"
+  ],
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.xe.com:npm/xecd-client.git"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha ./test/test.js"
+  },
+  "dependencies": {
+    "async": "^1.0",
+    "base-64": "^0.1",
+    "request": "^2.0",
+    "utf8": "^2.0",
+    "winston": "^2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0",
+    "chai-http": "^1.0",
+    "mocha": "^3.0"
+  }
+}
