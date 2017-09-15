@@ -1,0 +1,40 @@
+{
+    "name": "@xe/xecd-rates-client",
+    "description": "XECD REST Client",
+    "version": "0.1.0",
+    "repository": "XenonLab/xecd-rates-client-node",
+    "main": "index.js",
+    "keywords": [
+        "xecd",
+        "node",
+        "api",
+        "client",
+        "xe",
+        "currency",
+        "data",
+        "rest"
+    ],
+    "homepage": "http://www.xe.com/xecurrencydata/",
+    "license": "MPL-2.0",
+    "dependencies": {
+        "async": "^1.0",
+        "base-64": "^0.1",
+        "request": "^2.0",
+        "utf8": "^2.0",
+        "winston": "^2.0"
+    },
+    "devDependencies": {
+        "chai": "^4.0",
+        "chai-http": "^1.0",
+        "mocha": "^3.0"
+    },
+    "contributors": [
+        {
+            "name": "XE.com Inc. Development Team",
+            "url": "http://www.xe.com/"
+        }
+    ],
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha ./test/test.js"
+    }
+}
