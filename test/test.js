@@ -1,3 +1,5 @@
+//WONT WORK ANYMORE
+
 var chai = require('chai').assert;
 var index = require('../index');
 var async = require('async');

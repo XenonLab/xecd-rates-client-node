@@ -2,137 +2,72 @@ var request = require('request');
 var base64 = require('base-64'); 
 var utf8 = require('utf8');
 
-var config = null;
-
-function XECD(XECDConfig) {
-    this.config = XECDConfig;
-    if(XECDConfig.username == 'insert here' || XECDConfig.username == null || XECDConfig.password == 'AKA api key'  ||  XECDConfig.password == null) {
+class XecdClient {
+  constructor(config) {
+    if(config.username == 'insert here' || config.username == null || config.password == 'AKA api key'  ||  config.password == null) {
       throw new Error('username/password still placeholder');
-      process.exit(1);
     }
-}
-
-XECD.prototype.accountInfo = function (callback) {  //should be no params
-  var self = this;
-  var url = self.config.apiUrl + 'account_info.json';
-
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
-      //should be no parameters
-    }
+    this.config = config;
   }
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
+
+  send(urlEnd, qs, callback) {
+    var self = this;
+    var options = {
+      url: self.config.apiUrl + urlEnd,
+      auth: {
+        user: self.config.username,
+        password: self.config.password
+      },
+      qs: qs
     }
-  })
-}
+    request.get(options, function(err, res, body) {
+      if (err) {
+        console.log(err);
+        callback(err, null);
+      } else {
+        var data = JSON.parse(body);
+        callback(null, data);
+      }
+    })
+  }
 
-XECD.prototype.currencies = function (callback, obsolete = "false", language = "en", iso = ['*']) {
-  var self = this;
-  var url = self.config.apiUrl + 'currencies.json';
+  accountInfo(callback) {
+    this.send('account_info.json', {}, callback);
+  }
 
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  currencies(callback, obsolete = false, language = "en", iso = ['*']) {
+    var qs = {
       obsolete: obsolete ? true : false,
       language: language,
       iso: iso.join() //format: abc,def,ghi
     }
+    this.send('currencies.json', qs, callback);
   }
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
-}
 
-XECD.prototype.convertFrom = function (callback, from = "USD", to = "*" , amount = 1, obsolete = "false", inverse = "false") {
-  var self = this;
-  var url = self.config.apiUrl + 'convert_from.json';
-
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  convertFrom(callback, from = "USD", to = "*" , amount = 1, obsolete = false, inverse = false) {
+    var qs = {
       from: from,
       to: to,
       amount: amount,
       obsolete: obsolete ? true : false,
       inverse: inverse ? true : false
     }
-  };
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
-}
+    this.send('convert_from.json', qs, callback);
+  }
 
-XECD.prototype.convertTo = function (callback, to = "USD", from = "*", amount = 1, obsolete = "false", inverse = "false") {
-  var self = this;
-  var url = self.config.apiUrl + 'convert_to.json';
-
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  convertTo(callback, to = "USD", from = "*", amount = 1, obsolete = false, inverse = false) {
+    var qs = {
       to: to,
       from: from,
       amount: amount,
       obsolete: obsolete ? true : false,
       inverse: inverse ? true : false
     }
-  };
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
-}
+    this.send('convert_to.json', qs, callback);
+  }
 
-XECD.prototype.historicRate = function (callback, amount = 1, from = "USD" , to = "*", date, time, obsolete = "false", inverse = "false") {
-  var self = this;
-  var url = self.config.apiUrl + 'historic_rate.json';
-  
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  historicRate(callback, amount = 1, from = "USD" , to = "*", date, time, obsolete = false, inverse = false) {
+    var qs = {
       from: from,
       to: to,
       amount: amount,
@@ -141,29 +76,11 @@ XECD.prototype.historicRate = function (callback, amount = 1, from = "USD" , to 
       obsolete: obsolete ? true : false,
       inverse: inverse ? true : false
     }
-  };
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
-}
+    this.send('historic_rate.json', qs, callback);
+  }
 
-XECD.prototype.historicRatePeriod = function (callback, amount = 1, from = "USD", to = "*", start_timestamp = null, end_timestamp = null, interval = "DAILY", obsolete = false, inverse = false, page = 1, per_page = 30) {
-  var self = this;
-  var url = self.config.apiUrl + 'historic_rate/period.json';
-  
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  historicRatePeriod(callback, amount = 1, from = "USD", to = "*", start_timestamp = null, end_timestamp = null, interval = "DAILY", obsolete = false, inverse = false, page = 1, per_page = 30) {
+    var qs = {
       from: from,
       to: to,
       amount: amount,
@@ -175,29 +92,11 @@ XECD.prototype.historicRatePeriod = function (callback, amount = 1, from = "USD"
       page: page,
       per_page: per_page
     }
-  };
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
-}
+    this.send('historic_rate/period.json', qs, callback);
+  }
 
-XECD.prototype.monthlyAverage = function (callback, amount = 1, from = "USD", to = "*", year = null, month = null, obsolete = "false", inverse = "false") {
-  var self = this;
-  var url = self.config.apiUrl + 'monthly_average.json';
-  
-  var options = {
-    url: url,
-    auth: {
-      user: self.config.username,
-      password: self.config.password
-    },
-    qs: {
+  monthlyAverage(callback, amount = 1, from = "USD", to = "*", year = null, month = null, obsolete = false, inverse = false) {
+    var qs = {
       from: from,
       to: to,
       amount: amount,
@@ -206,16 +105,8 @@ XECD.prototype.monthlyAverage = function (callback, amount = 1, from = "USD", to
       obsolete: obsolete ? true : false,
       inverse: inverse ? true : false
     }
-  };
-  request.get(options, function (err, res, body) {
-    if (err) {
-      logger.error(err);
-      callback(err, null);
-    } else {
-      var data = JSON.parse(body);
-      callback(null, data);
-    }
-  })
+    this.send('monthly_average.json', qs, callback);
+  }
 }
 
-module.exports.XECD = XECD
+module.exports.XecdClient = XecdClient;
