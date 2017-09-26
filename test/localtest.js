@@ -1,3 +1,5 @@
+//These tests mock the api response
+
 var chai = require('chai').assert;
 var index = require('../index');
 var async = require('async');

@@ -1,4 +1,4 @@
-//WONT WORK ANYMORE
+//These tests actually call the api
 
 var chai = require('chai').assert;
 var index = require('../index');
@@ -11,149 +11,145 @@ var XECDConfig = {
     apiUrl: 'https://xecdapi.xe.com/v1/'
 };
 
-var xecdinit = new index.XECD(XECDConfig);
+var XecdClient = new index.XecdClient(XECDConfig);
 
-describe("XECD Rates API, Node Client", function() {
-  describe("accountInfo", function() {
-    it("Checking Request and Response", function() {
-        //no vars
-      async.auto({
-            getRates: function(callback) {
-                xecdinit.accountInfo()
+describe('XECD Node Client Local Tests', () => {
+    it("accountInfo", function() {
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.accountInfo(callback);
             },
-            test: ['getRates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
             return
         });
     });
-  });
-  describe("currencies", function() {
-    it("Checking Request and Response", function() {
-        //no vars
-      async.auto({
-            getRates: function(callback) {
-                xecdinit.currencies()
+
+    it("currencies", function() {
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.currencies(callback);
             },
-            test: ['getRates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
             return
         });
     });
-  });
-  describe("convertFrom", function() {
-    it("Checking Request and Response", function() {
+
+    it("convertFrom", function() {
         var from = "EUR";
         var to = "CAD";
-        var amount = "80";
-      async.auto({
-            getrates: function(callback) {
-                xecdinit.convertFrom(from, to, amount, callback)
+        var amount = 55;
+        
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.convertFrom(callback, from, to, amount);
             },
-            test: ['getrates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
-            return 
+            return
         });
     });
-  });
-  describe("convertTo", function() {
-    it("Checking Request and Response", function() {
-        var to = "CAD";
-        var from = "EUR";
-        var amount = "200";
-      async.auto({
-            getrates: function(callback) {
-                xecdinit.convertTo(to, from, amount, callback)
+
+    it("convertTo", function() {
+        var to = "RUB";
+        var from = "USD"
+        var amount = 55;
+
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.convertTo(callback, to, from, amount);
             },
-            test: ['getrates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
-            return 
+            return
         });
     });
-  });
-  describe("historicRate", function() {
-    it("Checking Request and Response", function() {
+
+    it("historicRate", function() {
         var amount = "55"
         var from = "EUR";
         var to = "CAD";
-        var date = "2016-02-02";
+        var date = "2016-11-11";
         var time = "04:04";
-      async.auto({
-            getrates: function(callback) {
-                xecdinit.historicRate(amount, from, to, date, time, callback)
+
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.historicRate(callback, amount, from, to, date, time);
             },
-            test: ['getrates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
-            return 
+            return
         });
     });
-  });
-  describe("historicRatePeriod", function() {
-    it("Checking Request and Response", function() {
+
+    it("historicRatePeriod", function() {
         var amount = "55"
         var from = "EUR";
         var to = "CAD";
-        var start_timestamp = "2011-02-11T12:00";
-        var end_timestamp = "2011-06-92T12:00";
-      async.auto({
-            getrates: function(callback) {
-                xecdinit.historicRatePeriod(amount, from, to, start_timestamp, end_timestamp, callback)
+        var start_timestamp = "2017-02-11T12:00";
+        var end_timestamp = "2017-06-12T12:00";
+
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.historicRatePeriod(callback, amount, from, to, start_timestamp, end_timestamp);
             },
-            test: ['getrates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
-            return 
+            return
         });
     });
-  });
-  describe("monthlyAverage", function() {
-    it("Checking Request and Response", function() {
+
+    it("monthlyAverage", function() {
         var amount = "55"
         var from = "EUR";
         var to = "CAD";
-        var year = "2015";
-        var month = "6";
-      async.auto({
-            getrates: function(callback) {
-                xecdinit.monthlyAverage(amount, from, to, year, month, callback)
+        var year = "2017";
+        var month = "4";
+
+        async.auto({
+            getInfo: function(callback) {
+                XecdClient.monthlyAverage(callback, amount, from, to, year, month);
             },
-            test: ['getrates', function(callback, results) {
-                chai.isNotNull(results.getrates);
+            test: ['getInfo', function(callback, result) {
+                chai.isNotNull(result.getInfo);
             }]
-        }, function (err, results){
+        }, function (err, result){
             if(err) {
-                logger.error("Test Failed");
+                console.log("Error Local Test");
             }
-            return 
+            return
         });
     });
-  });
 });
+
