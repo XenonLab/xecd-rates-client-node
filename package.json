@@ -24,6 +24,7 @@
         "winston": "^2.0"
     },
     "devDependencies": {
+        "node": "^8.0",
         "chai": "^4.0",
         "chai-http": "^1.0",
         "mocha": "^3.0",
@@ -36,7 +37,7 @@
         }
     ],
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha ./test/test.js",
-        "localtest": "./node_modules/mocha/bin/mocha ./test/localtest.js"
+        "test": "./node_modules/mocha/bin/mocha ./integration/XecdClientTest.js",
+        "localtest": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js"
     }
 }

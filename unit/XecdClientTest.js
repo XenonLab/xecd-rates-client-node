@@ -1,19 +1,19 @@
 //These tests mock the api response
 
 var chai = require('chai').assert;
-var index = require('../index');
+var client = require('../XecdClient');
 var async = require('async');
 var logger = require('winston');
 var sinon = require('sinon').sandbox.create();
 var request = require('request');
 
 var XECDConfig = {
-    username: 'insert here',    //mandatory
-    password: 'AKA api key',    //mandatory
+    accountId: 'accountId',    //mandatory
+    apiKey: 'apiKey',    //mandatory
     apiUrl: 'https://xecdapi.xe.com/v1/'
 };
 
-var XecdClient = new index.XecdClient(XECDConfig);
+var XecdClient = new client.XecdClient(XECDConfig);
 
 describe('XECD Node Client Local Tests', () => {
     beforeEach(function() {
