@@ -3,18 +3,29 @@ var base64 = require('base-64');
 var utf8 = require('utf8');
 
 class XecdClient {
-  constructor(config) {
-    this.config = config;
+  constructor(accountId, apiKey, options = {}) {
+    this.options = Object.assign({}, {
+        'auth': {
+          'user': accountId,
+          'password': apiKey  
+        },
+        'baseUrl': 'https://xecdapi.xe.com/v1/'
+    },options);
+    this.request = request.defaults(this.options);
+
+    this.accountInfoRequestUri = 'account_info.json';
+    this.currenciesRequestUri = 'currencies.json';
+    this.convertFromRequestUri = 'convert_from.json';
+    this.convertToRequestUri = 'convert_to.json';
+    this.historicRateRequestUri = 'historic_rate.json';
+    this.historicRatePeriodRequestUri = 'historic_rate/period.json';
+    this.monthlyAverageRequestUri = 'monthly_average.json';
   }
 
   send(ops, callback) {
     var self = this;
-    var options = ops;
-    options['auth'] =  {
-        user: self.config.accountId,
-        password: self.config.apiKey
-    };
-    request.get(options, function(err, res, body) {
+    self.options = Object.assign({}, self.options, ops);
+    request.get(self.options, function(err, res, body) {
       if (err) {
         console.log(err);
         callback(err, null);
@@ -28,8 +39,7 @@ class XecdClient {
   accountInfo(callback) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + "account_info.json",
-        qs: {}  //no variables
+        uri: self.accountInfoRequestUri
     };
     this.send(ops, callback);
   }
@@ -37,7 +47,7 @@ class XecdClient {
   currencies(callback, obsolete = false, language = "en", iso = ['*']) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'currencies.json',
+        uri: self.currenciesRequestUri,
         qs: {
             obsolete: obsolete ? true : false,
             language: language,
@@ -50,7 +60,7 @@ class XecdClient {
   convertFrom(callback, from = "USD", to = "*" , amount = 1, obsolete = false, inverse = false) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'convert_from.json',
+        uri: self.convertFromRequestUri,
         qs: {
             from: from,
             to: to,
@@ -65,7 +75,7 @@ class XecdClient {
   convertTo(callback, to = "USD", from = "*", amount = 1, obsolete = false, inverse = false) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'convert_to.json',
+        uri: self.convertToRequestUri,
         qs: {
             to: to,
             from: from,
@@ -80,7 +90,7 @@ class XecdClient {
   historicRate(callback, amount = 1, from = "USD" , to = "*", date, time, obsolete = false, inverse = false) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'historic_rate.json',
+        uri: self.historicRateRequestUri,
         qs: {
             from: from,
             to: to,
@@ -97,7 +107,7 @@ class XecdClient {
   historicRatePeriod(callback, amount = 1, from = "USD", to = "*", start_timestamp = null, end_timestamp = null, interval = "DAILY", obsolete = false, inverse = false, page = 1, per_page = 30) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'historic_rate/period.json',
+        uri: self.historicRatePeriodRequestUri,
         qs: {
             from: from,
             to: to,
@@ -117,7 +127,7 @@ class XecdClient {
   monthlyAverage(callback, amount = 1, from = "USD", to = "*", year = null, month = null, obsolete = false, inverse = false) {
     var self = this;
     var ops = {
-        url: self.config.apiUrl + 'monthly_average.json',
+        uri: self.monthlyAverageRequestUri,
         qs: {
             from: from,
             to: to,

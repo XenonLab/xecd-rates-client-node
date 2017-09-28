@@ -23,8 +23,10 @@
         "utf8": "^2.0",
         "winston": "^2.0"
     },
+    "engines": {
+        "node": ">=6.0"
+    },
     "devDependencies": {
-        "node": "^8.0",
         "chai": "^4.0",
         "chai-http": "^1.0",
         "mocha": "^3.0",
@@ -37,7 +39,8 @@
         }
     ],
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha ./integration/XecdClientTest.js",
-        "localtest": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js"
+        "test": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js",
+        "integration-test": "./node_modules/mocha/bin/mocha ./integration/XecdClientTest.js",
+        "unit-test": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js"
     }
 }

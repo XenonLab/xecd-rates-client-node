@@ -7,15 +7,9 @@ var logger = require('winston');
 var sinon = require('sinon').sandbox.create();
 var request = require('request');
 
-var XECDConfig = {
-    accountId: 'accountId',    //mandatory
-    apiKey: 'apiKey',    //mandatory
-    apiUrl: 'https://xecdapi.xe.com/v1/'
-};
+var XecdClient = new client.XecdClient('accountId', 'apiKey');
 
-var XecdClient = new client.XecdClient(XECDConfig);
-
-describe('XECD Node Client Local Tests', () => {
+describe('XECD Node Client Unit Tests', () => {
     beforeEach(function() {
         sinon.restore();
     });

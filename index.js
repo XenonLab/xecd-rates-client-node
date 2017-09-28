@@ -1,5 +1,3 @@
-var XecdClient = require('./XecdClient')
-
 module.exports = {
-  XecdClient
-}
+  XecdClient: require('./XecdClient')
+};

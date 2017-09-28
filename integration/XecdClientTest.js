@@ -5,15 +5,9 @@ var client = require('../XecdClient');
 var async = require('async');
 var logger = require('winston');
 
-var XECDConfig = {
-    accountId: 'accountId',    //mandatory
-    apiKey: 'apiKey',    //mandatory
-    apiUrl: 'https://xecdapi.xe.com/v1/'
-};
+var XecdClient = new client.XecdClient('accountId', 'apiKey');
 
-var XecdClient = new client.XecdClient(XECDConfig);
-
-describe('XECD Node Client Local Tests', () => {
+describe('XECD Node Client Integration Tests', () => {
     it("accountInfo", function() {
         async.auto({
             getInfo: function(callback) {
