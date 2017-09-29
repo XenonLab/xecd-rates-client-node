@@ -39,7 +39,7 @@
         }
     ],
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js",
+        "test": "npm run-script unit-test",
         "integration-test": "./node_modules/mocha/bin/mocha ./integration/XecdClientTest.js",
         "unit-test": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js"
     }
