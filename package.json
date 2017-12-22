@@ -1,7 +1,7 @@
 {
     "name": "@xe/xecd-rates-client",
     "description": "XECD REST Client",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "repository": "XenonLab/xecd-rates-client-node",
     "main": "index.js",
     "keywords": [
