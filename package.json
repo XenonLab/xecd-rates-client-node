@@ -1,7 +1,7 @@
 {
     "name": "@xe/xecd-rates-client",
     "description": "XECD REST Client",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "repository": "XenonLab/xecd-rates-client-node",
     "main": "index.js",
     "keywords": [
@@ -23,10 +23,14 @@
         "utf8": "^2.0",
         "winston": "^2.0"
     },
+    "engines": {
+        "node": ">=6.0"
+    },
     "devDependencies": {
         "chai": "^4.0",
         "chai-http": "^1.0",
-        "mocha": "^3.0"
+        "mocha": "^3.0",
+        "sinon": "^3.0"
     },
     "contributors": [
         {
@@ -35,6 +39,8 @@
         }
     ],
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha ./test/test.js"
+        "test": "npm run-script unit-test",
+        "integration-test": "./node_modules/mocha/bin/mocha ./integration/XecdClientTest.js",
+        "unit-test": "./node_modules/mocha/bin/mocha ./unit/XecdClientTest.js"
     }
 }
