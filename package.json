@@ -17,16 +17,13 @@
     "homepage": "http://www.xe.com/xecurrencydata/",
     "license": "MPL-2.0",
     "dependencies": {
-        "async": "^1.0",
-        "base-64": "^0.1",
-        "request": "^2.0",
-        "utf8": "^2.0",
-        "winston": "^2.0"
+        "request": "^2.0"
     },
     "engines": {
         "node": ">=6.0"
     },
     "devDependencies": {
+        "async": "^1.0",
         "chai": "^4.0",
         "chai-http": "^1.0",
         "mocha": "^3.0",
