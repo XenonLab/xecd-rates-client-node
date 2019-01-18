@@ -3,7 +3,6 @@
 var chai = require('chai').assert;
 var client = require('../XecdClient');
 var async = require('async');
-var logger = require('winston');
 var sinon = require('sinon').sandbox.create();
 var request = require('request');
 
@@ -46,7 +45,7 @@ describe('XECD Node Client Unit Tests', () => {
         const expectedResponse = JSON.stringify(tempBody);
 
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.currencies(callback);
@@ -69,9 +68,9 @@ describe('XECD Node Client Unit Tests', () => {
 
         const tempBody = {"terms":"http://www.xe.com/legal/dfs.php","privacy":"http://www.xe.com/privacy.php","from":"EUR","amount":55.0,"timestamp":"2017-09-25T20:41:00Z","to":[{"quotecurrency":"CAD","mid":80.6300904429}]};
         const expectedResponse = JSON.stringify(tempBody);
-        
+
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.convertFrom(callback, from, to, amount);
@@ -94,9 +93,9 @@ describe('XECD Node Client Unit Tests', () => {
 
         const tempBody = {"terms":"http://www.xe.com/legal/dfs.php","privacy":"http://www.xe.com/privacy.php","to":"RUB","amount":55.0,"timestamp":"2017-09-25T20:41:00Z","from":[{"quotecurrency":"USD","mid":0.9554756204}]};
         const expectedResponse = JSON.stringify(tempBody);
-        
+
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.convertTo(callback, to, from, amount);
@@ -121,9 +120,9 @@ describe('XECD Node Client Unit Tests', () => {
 
         const tempBody = { terms: 'http://www.xe.com/legal/dfs.php', privacy: 'http://www.xe.com/privacy.php', from: 'EUR', amount: 55, timestamp: '2016-11-11T04:00:00Z', to: [ { quotecurrency: 'CAD', mid: 80.8635246563, inverse: 0.0123665151 } ] };
         const expectedResponse = JSON.stringify(tempBody);
-        
+
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.historicRate(callback, amount, from, to, date, time);
@@ -148,9 +147,9 @@ describe('XECD Node Client Unit Tests', () => {
 
         const tempBody = {"terms":"http://www.xe.com/legal/dfs.php","privacy":"http://www.xe.com/privacy.php","from":"EUR","amount":55.0,"to":{"CAD":[{"mid":76.5456972519,"timestamp":"2017-02-11T12:00:00Z"},{"mid":76.5727295448,"timestamp":"2017-02-12T12:00:00Z"},{"mid":76.603013635,"timestamp":"2017-02-13T12:00:00Z"},{"mid":76.1650766751,"timestamp":"2017-02-14T12:00:00Z"},{"mid":75.9488874455,"timestamp":"2017-02-15T12:00:00Z"},{"mid":76.2342150631,"timestamp":"2017-02-16T12:00:00Z"},{"mid":76.652829584,"timestamp":"2017-02-17T12:00:00Z"},{"mid":76.4514045455,"timestamp":"2017-02-18T12:00:00Z"},{"mid":76.4461528129,"timestamp":"2017-02-19T12:00:00Z"},{"mid":76.5682669631,"timestamp":"2017-02-20T12:00:00Z"},{"mid":76.1683270611,"timestamp":"2017-02-21T12:00:00Z"},{"mid":76.0542271258,"timestamp":"2017-02-22T12:00:00Z"},{"mid":76.2777311549,"timestamp":"2017-02-23T12:00:00Z"},{"mid":76.4336502941,"timestamp":"2017-02-24T12:00:00Z"},{"mid":75.9980209334,"timestamp":"2017-02-25T12:00:00Z"},{"mid":76.0534668414,"timestamp":"2017-02-26T12:00:00Z"},{"mid":76.3306562047,"timestamp":"2017-02-27T12:00:00Z"},{"mid":76.7941345934,"timestamp":"2017-02-28T12:00:00Z"},{"mid":77.1795117692,"timestamp":"2017-03-01T12:00:00Z"},{"mid":77.3894521096,"timestamp":"2017-03-02T12:00:00Z"},{"mid":77.7710802634,"timestamp":"2017-03-03T12:00:00Z"},{"mid":78.1346177267,"timestamp":"2017-03-04T12:00:00Z"},{"mid":78.144167509,"timestamp":"2017-03-05T12:00:00Z"},{"mid":78.0038691634,"timestamp":"2017-03-06T12:00:00Z"},{"mid":77.9713602271,"timestamp":"2017-03-07T12:00:00Z"},{"mid":78.060481072,"timestamp":"2017-03-08T12:00:00Z"},{"mid":78.5226011996,"timestamp":"2017-03-09T12:00:00Z"},{"mid":78.5828081571,"timestamp":"2017-03-10T00:00:00Z"},{"mid":79.060459878,"timestamp":"2017-03-11T00:00:00Z"},{"mid":79.0555905422,"timestamp":"2017-03-12T12:00:00Z"}]}};
         const expectedResponse = JSON.stringify(tempBody);
-        
+
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.historicRatePeriod(callback, amount, from, to, start_timestamp, end_timestamp);
@@ -175,9 +174,9 @@ describe('XECD Node Client Unit Tests', () => {
 
         const tempBody = {"terms":"http://www.xe.com/legal/dfs.php","privacy":"http://www.xe.com/privacy.php","from":"EUR","amount":55.0,"year":2017,"to":{"CAD":[{"monthlyAverage":79.09474602,"month":4,"daysInMonth":29}]}};
         const expectedResponse = JSON.stringify(tempBody);
-        
+
         sinon.stub(request, 'get').yields(null, {statusCode: 200}, expectedResponse);
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.monthlyAverage(callback, amount, from, to, year, month);

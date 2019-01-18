@@ -3,7 +3,6 @@
 var chai = require('chai').assert;
 var client = require('../XecdClient');
 var async = require('async');
-var logger = require('winston');
 
 var XecdClient = new client.XecdClient('accountId', 'apiKey');
 
@@ -44,7 +43,7 @@ describe('XECD Node Client Integration Tests', () => {
         var from = "EUR";
         var to = "CAD";
         var amount = 55;
-        
+
         async.auto({
             getInfo: function(callback) {
                 XecdClient.convertFrom(callback, from, to, amount);
